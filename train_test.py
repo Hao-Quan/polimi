@@ -20,7 +20,7 @@ model_name = "resnet"
 num_classes = 11
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 256
+batch_size = 512
 
 # Number of epochs to train for
 num_epochs = 10
@@ -45,7 +45,7 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
         print('-' * 10)
 
         # Each epoch has a training and validation phase
-        for phase in ['train', 'val']:
+        for phase in ['train', 'test']:
             if phase == 'train':
                 model.train()  # Set model to training mode
             else:
@@ -55,8 +55,8 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
             running_corrects = 0
 
             # Iterate over data.
-            #for inputs, labels in dataloaders[phase]:
-            for inputs, labels in dataloaders:
+            for inputs, labels in dataloaders[phase]:
+            #for inputs, labels in dataloaders:
                 inputs = inputs.to(device, dtype=torch.float)
                 labels = labels.to(device, dtype=torch.long)
                 labels = torch.squeeze(labels)
@@ -95,18 +95,16 @@ def train_model(model, dataloaders, criterion, optimizer, num_epochs=25, is_ince
                 running_loss += loss.item() * inputs.size(0)
                 running_corrects += torch.sum(preds == labels.data)
 
-            # epoch_loss = running_loss / len(dataloaders[phase].dataset)
-            # epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
-            epoch_loss = running_loss / len(dataloaders.dataset)
-            epoch_acc = running_corrects.double() / len(dataloaders.dataset)
+            epoch_loss = running_loss / len(dataloaders[phase].dataset)
+            epoch_acc = running_corrects.double() / len(dataloaders[phase].dataset)
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
             # deep copy the model
-            if phase == 'val' and epoch_acc > best_acc:
+            if phase == 'test' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-            if phase == 'val':
+            if phase == 'test':
                 val_acc_history.append(epoch_acc)
 
 
@@ -213,7 +211,7 @@ data_transforms = {
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
-    'val': transforms.Compose([
+    'test': transforms.Compose([
         transforms.Resize(input_size),
         transforms.CenterCrop(input_size),
         transforms.ToTensor(),
@@ -226,7 +224,7 @@ print("Initializing Datasets and Dataloaders...")
 class ActivitySkeletalDataset(Dataset):
     """Face Landmarks dataset."""
 
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, key, transform=None):
         """
         Args:
             csv_file (string): Path to the csv file with annotations.
@@ -258,46 +256,60 @@ class ActivitySkeletalDataset(Dataset):
         #         self.landmarks_frame_X = self.landmarks_frame_X.append(current_file_data_X)
         #         self.label_Y = self.label_Y.append(current_file_data_Y)
 
-        self.landmarks_frame_X = pd.read_hdf(root_dir+"data.h5", key="X")
-        self.labels = pd.read_hdf(root_dir+"data.h5", key="Y")
+        self.data = pd.read_hdf(root_dir+"data_training_test.h5", key=key+"_data")
+        self.labels = pd.read_hdf(root_dir+"data_training_test.h5", key=key+"_label")
         self.root_dir = root_dir
         # self.transform = transform
         self.transform = transforms.Compose([transforms.ToTensor()])
 
     def __len__(self):
-        return len(self.landmarks_frame_X)
+        return len(self.data)
 
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        # img_name = os.path.join(self.root_dir,
-        #                         self.landmarks_frame.iloc[idx, 0])
-        # image = io.imread(img_name)
-        landmarks = self.landmarks_frame_X.iloc[idx, 0:]
-        landmarks = np.array([landmarks, landmarks, landmarks])
-        landmarks = landmarks.reshape(3, 18, 2)
-        landmarks = landmarks.astype('double').reshape(3, -1, 2)
-        sample = landmarks
+        data = self.data.iloc[idx, 0:]
+        data = np.array([data, data, data])
+        data = data.reshape(3, 18, 2)
+        data = data.astype('double').reshape(3, -1, 2)
 
         result = self.labels.iloc[idx]
         result = np.array([result])
         result = result.astype('int')
 
         if self.transform:
-            sample = self.transform(sample)
+            data = self.transform(data)
             result = self.transform(result)
 
-        return sample, result
+        return data, result
 
+        # landmarks = self.landmarks_frame_X.iloc[idx, 0:]
+        # landmarks = np.array([landmarks, landmarks, landmarks])
+        # landmarks = landmarks.reshape(3, 18, 2)
+        # landmarks = landmarks.astype('double').reshape(3, -1, 2)
+        # sample = landmarks
+        #
+        # result = self.labels.iloc[idx]
+        # result = np.array([result])
+        # result = result.astype('int')
+        #
+        # if self.transform:
+        #     sample = self.transform(sample)
+        #     result = self.transform(result)
+        #
+        # return sample, result
 
-activity_dataset = ActivitySkeletalDataset(root_dir='data/')
 
 # Create training and validation datasets
 #image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x), data_transforms[x]) for x in ['train']}
+activity_datasets = {x: ActivitySkeletalDataset(data_dir, x, data_transforms[x]) for x in ['train', 'test']}
+#activity_dataset = ActivitySkeletalDataset(root_dir='data/')
+
 # Create training and validation dataloaders
 #dataloaders_dict = {x: torch.utils.data.DataLoader(activity_dataset[x], batch_size=batch_size, shuffle=True, num_workers=0) for x in ['train']}
-my_dataloaders =  torch.utils.data.DataLoader(activity_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
+my_dataloaders_dict = {x: torch.utils.data.DataLoader(activity_datasets[x], batch_size=batch_size, shuffle=True, num_workers=0) for x in ['train', 'test']}
+#my_dataloaders =  torch.utils.data.DataLoader(activity_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 
 # Detect if we have a GPU available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -329,4 +341,4 @@ optimizer_ft = optim.SGD(params_to_update, lr=0.001, momentum=0.9)
 criterion = nn.CrossEntropyLoss()
 
 # Train and evaluate
-model_ft, hist = train_model(model_ft, my_dataloaders, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+model_ft, hist = train_model(model_ft, my_dataloaders_dict, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
