@@ -99,17 +99,18 @@ def train_model(model, train_dataloader, test_dataloader, criterion, optimizer, 
                 if accuracy > best_acc:
                     print("In Epoch: {}, Iteration: {}, Accuracy: {}, Better accuracy appears!!!".format(epoch, iter, accuracy))
                     best_acc = accuracy
-                    best_model_wts = copy.deepcopy(model)
+                    best_model = copy.deepcopy(model)
                     # best_model_wts = copy.deepcopy(model.state_dict())
 
     torch.save(best_model_wts, "model/pretrained.pth")
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
-    print('Best val Acc: {:4f}'.format(best_acc))
+    print('Best test Acc: {:4f}'.format(best_acc))
 
     # load best model weights
-    model.load_state_dict(best_model_wts)
+    # model.load_state_dict(best_model_wts)
+    model = torch.load(best_model)
     return model, val_acc_history
 
 def set_parameter_requires_grad(model, feature_extracting):

@@ -98,3 +98,6 @@ for inputs, labels in test_dataloader:
     _, predicted = torch.max(outputs, 1)
     total += labels.size(0)
     correct += (predicted == labels).sum()
+
+accuracy = 100 * correct / total
+print('Test Acc: {:4f}'.format(accuracy))

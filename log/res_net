@@ -1,0 +1,629 @@
+/home/hao/anaconda3/envs/open-mmlab/bin/python /home/hao/Projects/research/train_test_v2.py
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Linear(in_features=512, out_features=11, bias=True)
+)
+Initializing Datasets and Dataloaders...
+Params to learn:
+	 conv1.weight
+	 bn1.weight
+	 bn1.bias
+	 layer1.0.conv1.weight
+	 layer1.0.bn1.weight
+	 layer1.0.bn1.bias
+	 layer1.0.conv2.weight
+	 layer1.0.bn2.weight
+	 layer1.0.bn2.bias
+	 layer1.1.conv1.weight
+	 layer1.1.bn1.weight
+	 layer1.1.bn1.bias
+	 layer1.1.conv2.weight
+	 layer1.1.bn2.weight
+	 layer1.1.bn2.bias
+	 layer2.0.conv1.weight
+	 layer2.0.bn1.weight
+	 layer2.0.bn1.bias
+	 layer2.0.conv2.weight
+	 layer2.0.bn2.weight
+	 layer2.0.bn2.bias
+	 layer2.0.downsample.0.weight
+	 layer2.0.downsample.1.weight
+	 layer2.0.downsample.1.bias
+	 layer2.1.conv1.weight
+	 layer2.1.bn1.weight
+	 layer2.1.bn1.bias
+	 layer2.1.conv2.weight
+	 layer2.1.bn2.weight
+	 layer2.1.bn2.bias
+	 layer3.0.conv1.weight
+	 layer3.0.bn1.weight
+	 layer3.0.bn1.bias
+	 layer3.0.conv2.weight
+	 layer3.0.bn2.weight
+	 layer3.0.bn2.bias
+	 layer3.0.downsample.0.weight
+	 layer3.0.downsample.1.weight
+	 layer3.0.downsample.1.bias
+	 layer3.1.conv1.weight
+	 layer3.1.bn1.weight
+	 layer3.1.bn1.bias
+	 layer3.1.conv2.weight
+	 layer3.1.bn2.weight
+	 layer3.1.bn2.bias
+	 layer4.0.conv1.weight
+	 layer4.0.bn1.weight
+	 layer4.0.bn1.bias
+	 layer4.0.conv2.weight
+	 layer4.0.bn2.weight
+	 layer4.0.bn2.bias
+	 layer4.0.downsample.0.weight
+	 layer4.0.downsample.1.weight
+	 layer4.0.downsample.1.bias
+	 layer4.1.conv1.weight
+	 layer4.1.bn1.weight
+	 layer4.1.bn1.bias
+	 layer4.1.conv2.weight
+	 layer4.1.bn2.weight
+	 layer4.1.bn2.bias
+	 fc.weight
+	 fc.bias
+Epoch 0/49
+----------
+Now Iteration: 50.
+Iteration: 50. Loss: 1.2436825037002563. Accuracy: 59
+In Epoch: 0, Iteration: 50, Accuracy: 59, Better accuracy appears!!!
+Now Iteration: 100.
+Iteration: 100. Loss: 1.0181502103805542. Accuracy: 65
+In Epoch: 0, Iteration: 100, Accuracy: 65, Better accuracy appears!!!
+Now Iteration: 150.
+Iteration: 150. Loss: 0.9789605140686035. Accuracy: 68
+In Epoch: 0, Iteration: 150, Accuracy: 68, Better accuracy appears!!!
+Epoch 1/49
+----------
+Now Iteration: 200.
+Iteration: 200. Loss: 0.9265186786651611. Accuracy: 69
+In Epoch: 1, Iteration: 200, Accuracy: 69, Better accuracy appears!!!
+Now Iteration: 250.
+Iteration: 250. Loss: 0.850958526134491. Accuracy: 71
+In Epoch: 1, Iteration: 250, Accuracy: 71, Better accuracy appears!!!
+Now Iteration: 300.
+Iteration: 300. Loss: 0.8601610064506531. Accuracy: 72
+In Epoch: 1, Iteration: 300, Accuracy: 72, Better accuracy appears!!!
+Epoch 2/49
+----------
+Now Iteration: 350.
+Iteration: 350. Loss: 0.759776771068573. Accuracy: 73
+In Epoch: 2, Iteration: 350, Accuracy: 73, Better accuracy appears!!!
+Now Iteration: 400.
+Iteration: 400. Loss: 0.7360159754753113. Accuracy: 74
+In Epoch: 2, Iteration: 400, Accuracy: 74, Better accuracy appears!!!
+Now Iteration: 450.
+Iteration: 450. Loss: 0.6739752888679504. Accuracy: 75
+In Epoch: 2, Iteration: 450, Accuracy: 75, Better accuracy appears!!!
+Now Iteration: 500.
+Iteration: 500. Loss: 0.6620271801948547. Accuracy: 76
+In Epoch: 2, Iteration: 500, Accuracy: 76, Better accuracy appears!!!
+Epoch 3/49
+----------
+Now Iteration: 550.
+Iteration: 550. Loss: 0.6486601233482361. Accuracy: 76
+Now Iteration: 600.
+Iteration: 600. Loss: 0.6352410316467285. Accuracy: 78
+In Epoch: 3, Iteration: 600, Accuracy: 78, Better accuracy appears!!!
+Now Iteration: 650.
+Iteration: 650. Loss: 0.6061741709709167. Accuracy: 78
+Epoch 4/49
+----------
+Now Iteration: 700.
+Iteration: 700. Loss: 0.5590944290161133. Accuracy: 78
+Now Iteration: 750.
+Iteration: 750. Loss: 0.5567334890365601. Accuracy: 79
+In Epoch: 4, Iteration: 750, Accuracy: 79, Better accuracy appears!!!
+Now Iteration: 800.
+Iteration: 800. Loss: 0.546579897403717. Accuracy: 79
+Now Iteration: 850.
+Iteration: 850. Loss: 0.5378610491752625. Accuracy: 79
+Epoch 5/49
+----------
+Now Iteration: 900.
+Iteration: 900. Loss: 0.56089848279953. Accuracy: 80
+In Epoch: 5, Iteration: 900, Accuracy: 80, Better accuracy appears!!!
+Now Iteration: 950.
+Iteration: 950. Loss: 0.5056407451629639. Accuracy: 80
+Now Iteration: 1000.
+Iteration: 1000. Loss: 0.49281466007232666. Accuracy: 80
+Epoch 6/49
+----------
+Now Iteration: 1050.
+Iteration: 1050. Loss: 0.560285210609436. Accuracy: 80
+Now Iteration: 1100.
+Iteration: 1100. Loss: 0.46489498019218445. Accuracy: 81
+In Epoch: 6, Iteration: 1100, Accuracy: 81, Better accuracy appears!!!
+Now Iteration: 1150.
+Iteration: 1150. Loss: 0.5114043951034546. Accuracy: 81
+Now Iteration: 1200.
+Iteration: 1200. Loss: 0.4846237003803253. Accuracy: 81
+Epoch 7/49
+----------
+Now Iteration: 1250.
+Iteration: 1250. Loss: 0.45578059554100037. Accuracy: 81
+Now Iteration: 1300.
+Iteration: 1300. Loss: 0.4268210232257843. Accuracy: 82
+In Epoch: 7, Iteration: 1300, Accuracy: 82, Better accuracy appears!!!
+Now Iteration: 1350.
+Iteration: 1350. Loss: 0.4912773072719574. Accuracy: 81
+Epoch 8/49
+----------
+Now Iteration: 1400.
+Iteration: 1400. Loss: 0.39648327231407166. Accuracy: 82
+Now Iteration: 1450.
+Iteration: 1450. Loss: 0.4222874641418457. Accuracy: 82
+Now Iteration: 1500.
+Iteration: 1500. Loss: 0.4277936816215515. Accuracy: 83
+In Epoch: 8, Iteration: 1500, Accuracy: 83, Better accuracy appears!!!
+Epoch 9/49
+----------
+Now Iteration: 1550.
+Iteration: 1550. Loss: 0.37324443459510803. Accuracy: 82
+Now Iteration: 1600.
+Iteration: 1600. Loss: 0.3875274658203125. Accuracy: 83
+Now Iteration: 1650.
+Iteration: 1650. Loss: 0.37400850653648376. Accuracy: 83
+Now Iteration: 1700.
+Iteration: 1700. Loss: 0.3915584981441498. Accuracy: 83
+Epoch 10/49
+----------
+Now Iteration: 1750.
+Iteration: 1750. Loss: 0.3621724247932434. Accuracy: 83
+Now Iteration: 1800.
+Iteration: 1800. Loss: 0.36280128359794617. Accuracy: 83
+Now Iteration: 1850.
+Iteration: 1850. Loss: 0.36537832021713257. Accuracy: 83
+Epoch 11/49
+----------
+Now Iteration: 1900.
+Iteration: 1900. Loss: 0.3925550878047943. Accuracy: 83
+Now Iteration: 1950.
+Iteration: 1950. Loss: 0.3222671449184418. Accuracy: 84
+In Epoch: 11, Iteration: 1950, Accuracy: 84, Better accuracy appears!!!
+Now Iteration: 2000.
+Iteration: 2000. Loss: 0.41542693972587585. Accuracy: 84
+Now Iteration: 2050.
+Iteration: 2050. Loss: 0.4116823375225067. Accuracy: 84
+Epoch 12/49
+----------
+Now Iteration: 2100.
+Iteration: 2100. Loss: 0.3561410903930664. Accuracy: 83
+Now Iteration: 2150.
+Iteration: 2150. Loss: 0.3237455487251282. Accuracy: 84
+Now Iteration: 2200.
+Iteration: 2200. Loss: 0.35460165143013. Accuracy: 84
+Epoch 13/49
+----------
+Now Iteration: 2250.
+Iteration: 2250. Loss: 0.3095923960208893. Accuracy: 84
+Now Iteration: 2300.
+Iteration: 2300. Loss: 0.3264533579349518. Accuracy: 84
+Now Iteration: 2350.
+Iteration: 2350. Loss: 0.36726367473602295. Accuracy: 85
+In Epoch: 13, Iteration: 2350, Accuracy: 85, Better accuracy appears!!!
+Now Iteration: 2400.
+Iteration: 2400. Loss: 0.3199048638343811. Accuracy: 84
+Epoch 14/49
+----------
+Now Iteration: 2450.
+Iteration: 2450. Loss: 0.3249422609806061. Accuracy: 85
+Now Iteration: 2500.
+Iteration: 2500. Loss: 0.3012636601924896. Accuracy: 85
+Now Iteration: 2550.
+Iteration: 2550. Loss: 0.3453388512134552. Accuracy: 85
+Epoch 15/49
+----------
+Now Iteration: 2600.
+Iteration: 2600. Loss: 0.30616459250450134. Accuracy: 85
+Now Iteration: 2650.
+Iteration: 2650. Loss: 0.2945820689201355. Accuracy: 85
+Now Iteration: 2700.
+Iteration: 2700. Loss: 0.3113608956336975. Accuracy: 85
+Now Iteration: 2750.
+Iteration: 2750. Loss: 0.29289454221725464. Accuracy: 85
+Epoch 16/49
+----------
+Now Iteration: 2800.
+Iteration: 2800. Loss: 0.29815033078193665. Accuracy: 85
+Now Iteration: 2850.
+Iteration: 2850. Loss: 0.2672768235206604. Accuracy: 86
+In Epoch: 16, Iteration: 2850, Accuracy: 86, Better accuracy appears!!!
+Now Iteration: 2900.
+Iteration: 2900. Loss: 0.2866363227367401. Accuracy: 85
+Epoch 17/49
+----------
+Now Iteration: 2950.
+Iteration: 2950. Loss: 0.2687644958496094. Accuracy: 85
+Now Iteration: 3000.
+Iteration: 3000. Loss: 0.2689321041107178. Accuracy: 86
+Now Iteration: 3050.
+Iteration: 3050. Loss: 0.2864423990249634. Accuracy: 86
+Epoch 18/49
+----------
+Now Iteration: 3100.
+Iteration: 3100. Loss: 0.30595383048057556. Accuracy: 84
+Now Iteration: 3150.
+Iteration: 3150. Loss: 0.290956050157547. Accuracy: 85
+Now Iteration: 3200.
+Iteration: 3200. Loss: 0.20502886176109314. Accuracy: 86
+Now Iteration: 3250.
+Iteration: 3250. Loss: 0.3116699755191803. Accuracy: 86
+Epoch 19/49
+----------
+Now Iteration: 3300.
+Iteration: 3300. Loss: 0.256592333316803. Accuracy: 86
+Now Iteration: 3350.
+Iteration: 3350. Loss: 0.26475706696510315. Accuracy: 85
+Now Iteration: 3400.
+Iteration: 3400. Loss: 0.28360939025878906. Accuracy: 86
+Epoch 20/49
+----------
+Now Iteration: 3450.
+Iteration: 3450. Loss: 0.2409217655658722. Accuracy: 86
+Now Iteration: 3500.
+Iteration: 3500. Loss: 0.23608903586864471. Accuracy: 86
+Now Iteration: 3550.
+Iteration: 3550. Loss: 0.2361958920955658. Accuracy: 86
+Now Iteration: 3600.
+Iteration: 3600. Loss: 0.23981529474258423. Accuracy: 86
+Epoch 21/49
+----------
+Now Iteration: 3650.
+Iteration: 3650. Loss: 0.27856534719467163. Accuracy: 86
+Now Iteration: 3700.
+Iteration: 3700. Loss: 0.22089356184005737. Accuracy: 87
+In Epoch: 21, Iteration: 3700, Accuracy: 87, Better accuracy appears!!!
+Now Iteration: 3750.
+Iteration: 3750. Loss: 0.26096755266189575. Accuracy: 86
+Epoch 22/49
+----------
+Now Iteration: 3800.
+Iteration: 3800. Loss: 0.2180381417274475. Accuracy: 86
+Now Iteration: 3850.
+Iteration: 3850. Loss: 0.2373170703649521. Accuracy: 86
+Now Iteration: 3900.
+Iteration: 3900. Loss: 0.23842506110668182. Accuracy: 86
+Now Iteration: 3950.
+Iteration: 3950. Loss: 0.24047653377056122. Accuracy: 87
+Epoch 23/49
+----------
+Now Iteration: 4000.
+Iteration: 4000. Loss: 0.19498883187770844. Accuracy: 86
+Now Iteration: 4050.
+Iteration: 4050. Loss: 0.23227903246879578. Accuracy: 86
+Now Iteration: 4100.
+Iteration: 4100. Loss: 0.23420755565166473. Accuracy: 87
+Epoch 24/49
+----------
+Now Iteration: 4150.
+Iteration: 4150. Loss: 0.22056756913661957. Accuracy: 86
+Now Iteration: 4200.
+Iteration: 4200. Loss: 0.20456191897392273. Accuracy: 87
+Now Iteration: 4250.
+Iteration: 4250. Loss: 0.20870041847229004. Accuracy: 86
+Now Iteration: 4300.
+Iteration: 4300. Loss: 0.44949832558631897. Accuracy: 86
+Epoch 25/49
+----------
+Now Iteration: 4350.
+Iteration: 4350. Loss: 0.21127857267856598. Accuracy: 87
+Now Iteration: 4400.
+Iteration: 4400. Loss: 0.20662832260131836. Accuracy: 87
+Now Iteration: 4450.
+Iteration: 4450. Loss: 0.17169244587421417. Accuracy: 87
+Epoch 26/49
+----------
+Now Iteration: 4500.
+Iteration: 4500. Loss: 0.2691100537776947. Accuracy: 87
+Now Iteration: 4550.
+Iteration: 4550. Loss: 0.25306180119514465. Accuracy: 88
+In Epoch: 26, Iteration: 4550, Accuracy: 88, Better accuracy appears!!!
+Now Iteration: 4600.
+Iteration: 4600. Loss: 0.19267752766609192. Accuracy: 87
+Epoch 27/49
+----------
+Now Iteration: 4650.
+Iteration: 4650. Loss: 0.18943192064762115. Accuracy: 87
+Now Iteration: 4700.
+Iteration: 4700. Loss: 0.16575120389461517. Accuracy: 87
+Now Iteration: 4750.
+Iteration: 4750. Loss: 0.24250304698944092. Accuracy: 87
+Now Iteration: 4800.
+Iteration: 4800. Loss: 0.19615688920021057. Accuracy: 87
+Epoch 28/49
+----------
+Now Iteration: 4850.
+Iteration: 4850. Loss: 0.17309102416038513. Accuracy: 87
+Now Iteration: 4900.
+Iteration: 4900. Loss: 0.19314095377922058. Accuracy: 87
+Now Iteration: 4950.
+Iteration: 4950. Loss: 0.2081504911184311. Accuracy: 87
+Epoch 29/49
+----------
+Now Iteration: 5000.
+Iteration: 5000. Loss: 0.17653784155845642. Accuracy: 87
+Now Iteration: 5050.
+Iteration: 5050. Loss: 0.191084086894989. Accuracy: 87
+Now Iteration: 5100.
+Iteration: 5100. Loss: 0.17990489304065704. Accuracy: 87
+Now Iteration: 5150.
+Iteration: 5150. Loss: 0.17254497110843658. Accuracy: 88
+Epoch 30/49
+----------
+Now Iteration: 5200.
+Iteration: 5200. Loss: 0.19232644140720367. Accuracy: 87
+Now Iteration: 5250.
+Iteration: 5250. Loss: 0.15962231159210205. Accuracy: 87
+Now Iteration: 5300.
+Iteration: 5300. Loss: 0.1788993924856186. Accuracy: 88
+Epoch 31/49
+----------
+Now Iteration: 5350.
+Iteration: 5350. Loss: 0.2881866693496704. Accuracy: 87
+Now Iteration: 5400.
+Iteration: 5400. Loss: 0.17975091934204102. Accuracy: 88
+Now Iteration: 5450.
+Iteration: 5450. Loss: 0.1427943855524063. Accuracy: 88
+Now Iteration: 5500.
+Iteration: 5500. Loss: 0.2304079681634903. Accuracy: 87
+Epoch 32/49
+----------
+Now Iteration: 5550.
+Iteration: 5550. Loss: 0.14352408051490784. Accuracy: 88
+Now Iteration: 5600.
+Iteration: 5600. Loss: 0.18251517415046692. Accuracy: 88
+Now Iteration: 5650.
+Iteration: 5650. Loss: 0.17310549318790436. Accuracy: 88
+Epoch 33/49
+----------
+Now Iteration: 5700.
+Iteration: 5700. Loss: 0.25821465253829956. Accuracy: 87
+Now Iteration: 5750.
+Iteration: 5750. Loss: 0.16087128221988678. Accuracy: 88
+Now Iteration: 5800.
+Iteration: 5800. Loss: 0.15520702302455902. Accuracy: 88
+Epoch 34/49
+----------
+Now Iteration: 5850.
+Iteration: 5850. Loss: 0.13834691047668457. Accuracy: 87
+Now Iteration: 5900.
+Iteration: 5900. Loss: 0.16292335093021393. Accuracy: 88
+Now Iteration: 5950.
+Iteration: 5950. Loss: 0.19102972745895386. Accuracy: 88
+Now Iteration: 6000.
+Iteration: 6000. Loss: 0.1609571874141693. Accuracy: 88
+Epoch 35/49
+----------
+Now Iteration: 6050.
+Iteration: 6050. Loss: 0.14952172338962555. Accuracy: 88
+Now Iteration: 6100.
+Iteration: 6100. Loss: 0.1381308138370514. Accuracy: 88
+Now Iteration: 6150.
+Iteration: 6150. Loss: 0.17365191876888275. Accuracy: 88
+Epoch 36/49
+----------
+Now Iteration: 6200.
+Iteration: 6200. Loss: 0.14471490681171417. Accuracy: 88
+Now Iteration: 6250.
+Iteration: 6250. Loss: 0.16838248074054718. Accuracy: 88
+Now Iteration: 6300.
+Iteration: 6300. Loss: 0.17666323482990265. Accuracy: 88
+Now Iteration: 6350.
+Iteration: 6350. Loss: 0.32537493109703064. Accuracy: 89
+In Epoch: 36, Iteration: 6350, Accuracy: 89, Better accuracy appears!!!
+Epoch 37/49
+----------
+Now Iteration: 6400.
+Iteration: 6400. Loss: 0.17787323892116547. Accuracy: 88
+Now Iteration: 6450.
+Iteration: 6450. Loss: 0.1665370613336563. Accuracy: 88
+Now Iteration: 6500.
+Iteration: 6500. Loss: 0.18574579060077667. Accuracy: 88
+Epoch 38/49
+----------
+Now Iteration: 6550.
+Iteration: 6550. Loss: 0.166973277926445. Accuracy: 88
+Now Iteration: 6600.
+Iteration: 6600. Loss: 0.1437118649482727. Accuracy: 89
+Now Iteration: 6650.
+Iteration: 6650. Loss: 0.1773647964000702. Accuracy: 88
+Now Iteration: 6700.
+Iteration: 6700. Loss: 0.1399223953485489. Accuracy: 88
+Epoch 39/49
+----------
+Now Iteration: 6750.
+Iteration: 6750. Loss: 0.12849755585193634. Accuracy: 88
+Now Iteration: 6800.
+Iteration: 6800. Loss: 0.12143014371395111. Accuracy: 88
+Now Iteration: 6850.
+Iteration: 6850. Loss: 0.11824597418308258. Accuracy: 88
+Epoch 40/49
+----------
+Now Iteration: 6900.
+Iteration: 6900. Loss: 0.1382647603750229. Accuracy: 88
+Now Iteration: 6950.
+Iteration: 6950. Loss: 0.15932700037956238. Accuracy: 88
+Now Iteration: 7000.
+Iteration: 7000. Loss: 0.1466951072216034. Accuracy: 88
+Now Iteration: 7050.
+Iteration: 7050. Loss: 0.15042561292648315. Accuracy: 88
+Epoch 41/49
+----------
+Now Iteration: 7100.
+Iteration: 7100. Loss: 0.13764695823192596. Accuracy: 88
+Now Iteration: 7150.
+Iteration: 7150. Loss: 0.17378269135951996. Accuracy: 89
+Now Iteration: 7200.
+Iteration: 7200. Loss: 0.13644228875637054. Accuracy: 89
+Epoch 42/49
+----------
+Now Iteration: 7250.
+Iteration: 7250. Loss: 0.13073615729808807. Accuracy: 89
+Now Iteration: 7300.
+Iteration: 7300. Loss: 0.16039200127124786. Accuracy: 88
+Now Iteration: 7350.
+Iteration: 7350. Loss: 0.20662778615951538. Accuracy: 88
+Epoch 43/49
+----------
+Now Iteration: 7400.
+Iteration: 7400. Loss: 0.1505763828754425. Accuracy: 88
+Now Iteration: 7450.
+Iteration: 7450. Loss: 0.11893001198768616. Accuracy: 89
+Now Iteration: 7500.
+Iteration: 7500. Loss: 0.1381656527519226. Accuracy: 89
+Now Iteration: 7550.
+Iteration: 7550. Loss: 0.15031804144382477. Accuracy: 89
+Epoch 44/49
+----------
+Now Iteration: 7600.
+Iteration: 7600. Loss: 0.1272917538881302. Accuracy: 88
+Now Iteration: 7650.
+Iteration: 7650. Loss: 0.1252867728471756. Accuracy: 89
+Now Iteration: 7700.
+Iteration: 7700. Loss: 0.11940310895442963. Accuracy: 89
+Epoch 45/49
+----------
+Now Iteration: 7750.
+Iteration: 7750. Loss: 0.12131425738334656. Accuracy: 88
+Now Iteration: 7800.
+Iteration: 7800. Loss: 0.1395353078842163. Accuracy: 89
+Now Iteration: 7850.
+Iteration: 7850. Loss: 0.11681855469942093. Accuracy: 89
+Now Iteration: 7900.
+Iteration: 7900. Loss: 0.18566958606243134. Accuracy: 88
+Epoch 46/49
+----------
+Now Iteration: 7950.
+Iteration: 7950. Loss: 0.12867553532123566. Accuracy: 88
+Now Iteration: 8000.
+Iteration: 8000. Loss: 0.11721570789813995. Accuracy: 89
+Now Iteration: 8050.
+Iteration: 8050. Loss: 0.09951239824295044. Accuracy: 89
+Epoch 47/49
+----------
+Now Iteration: 8100.
+Iteration: 8100. Loss: 0.15409550070762634. Accuracy: 88
+Now Iteration: 8150.
+Iteration: 8150. Loss: 0.12975704669952393. Accuracy: 89
+Now Iteration: 8200.
+Iteration: 8200. Loss: 0.1469394415616989. Accuracy: 88
+Now Iteration: 8250.
+Iteration: 8250. Loss: 0.10764365643262863. Accuracy: 89
+Epoch 48/49
+----------
+Now Iteration: 8300.
+Iteration: 8300. Loss: 0.12339910119771957. Accuracy: 89
+Now Iteration: 8350.
+Iteration: 8350. Loss: 0.14266230165958405. Accuracy: 89
+Now Iteration: 8400.
+Iteration: 8400. Loss: 0.11709541827440262. Accuracy: 89
+Epoch 49/49
+----------
+Now Iteration: 8450.
+Iteration: 8450. Loss: 0.1022147685289383. Accuracy: 89
+Now Iteration: 8500.
+Iteration: 8500. Loss: 0.13845321536064148. Accuracy: 89
+Now Iteration: 8550.
+Iteration: 8550. Loss: 0.1348411738872528. Accuracy: 89
+Now Iteration: 8600.
+Iteration: 8600. Loss: 0.12224806100130081. Accuracy: 89
+Training complete in 366m 11s
+Best val Acc: 89.000000
+Traceback (most recent call last):
+  File "/home/hao/Projects/research/train_test_v2.py", line 294, in <module>
+    model_ft, hist = train_model(model_ft, train_dataloader, test_dataloader, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
+  File "/home/hao/Projects/research/train_test_v2.py", line 112, in train_model
+    model.load_state_dict(best_model_wts)
+  File "/home/hao/anaconda3/envs/open-mmlab/lib/python3.7/site-packages/torch/nn/modules/module.py", line 803, in load_state_dict
+    state_dict = state_dict.copy()
+  File "/home/hao/anaconda3/envs/open-mmlab/lib/python3.7/site-packages/torch/nn/modules/module.py", line 576, in __getattr__
+    type(self).__name__, name))
+AttributeError: 'ResNet' object has no attribute 'copy'
+
+Process finished with exit code 1
