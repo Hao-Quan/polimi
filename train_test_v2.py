@@ -102,7 +102,7 @@ def train_model(model, train_dataloader, test_dataloader, criterion, optimizer, 
                     best_model = copy.deepcopy(model)
                     # best_model_wts = copy.deepcopy(model.state_dict())
 
-    torch.save(best_model_wts, "model/pretrained.pth")
+    torch.save(best_model_wts, "model/"+model_name+"_pretrained.pth")
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))

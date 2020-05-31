@@ -1,5 +1,17 @@
 import torch
+import pandas as pd
 
-x = torch.tensor([1, 2, 3, 4])
-y = torch.unsqueeze(x, 0)
-z = torch.unsqueeze(x, 1)
+print(torch.__version__)
+
+
+# from torchvision import _C
+# if hasattr(_C, 'CUDA_VERSION'):
+#     cuda = _C.CUDA_VERSION
+
+
+# def hello_world():
+#     print("hello world")
+# if __name__ == '__main__':
+#     import pdb; pdb.set_trace()
+#     hello_world()
+
