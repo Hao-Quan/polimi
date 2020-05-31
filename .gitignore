@@ -1,0 +1,3 @@
+./data/data_training_test.h5
+./model/alexnet.pth
+./model/vgg11_bn.pth
