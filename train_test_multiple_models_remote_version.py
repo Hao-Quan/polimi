@@ -15,7 +15,7 @@ import pdb
 data_dir = "data/"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "squeezenet"
+model_name = "densenet"
 
 # Number of classes in the dataset
 num_classes = 11
@@ -268,6 +268,8 @@ class ActivitySkeletalDataset(Dataset):
             data = data.reshape(3, 18, 2)
             data = data.astype('double').reshape(3, -1, 2)
 
+        # Have loss diverge to infinity problem
+
         if model_name == 'alexnet':
             data = np.array(data).reshape(-1, 1)
             data_column_expanded = data
@@ -289,6 +291,24 @@ class ActivitySkeletalDataset(Dataset):
             for i in range(6):
                 data_row_column_expanded = np.concatenate((data_row_column_expanded, data_column_expanded), axis=0)
             data = np.array([data_row_column_expanded, data_row_column_expanded, data_row_column_expanded]).astype(
+                'double')
+
+        # Have loss diverge to infinity problem
+
+        if model_name == 'squeezenet':
+            data = np.array(data).reshape(-1, 1)
+            data_column_expanded = data
+            for i in range(5):
+                data_column_expanded = np.concatenate((data_column_expanded, data_column_expanded), axis=1)
+            data = np.array([data_column_expanded, data_column_expanded, data_column_expanded]).astype(
+                'double')
+
+        if model_name == 'densenet':
+            data = np.array(data).reshape(-1, 1)
+            data_column_expanded = data
+            for i in range(5):
+                data_column_expanded = np.concatenate((data_column_expanded, data_column_expanded), axis=1)
+            data = np.array([data_column_expanded, data_column_expanded, data_column_expanded]).astype(
                 'double')
 
         result = self.labels.iloc[idx]
