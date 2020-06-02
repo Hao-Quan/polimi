@@ -82,7 +82,7 @@ def train_model(model, train_dataloader, test_dataloader, criterion, optimizer, 
                 optimizer.step()
 
             iter += 1
-            if (iter % 20 == 0):
+            if iter % 20 == 0:
                 print("Training... Epoch {}, Training iteration {}".format(epoch, iter))
 
             if iter % 1000 == 0:
@@ -98,11 +98,8 @@ def train_model(model, train_dataloader, test_dataloader, criterion, optimizer, 
                     inputs = inputs.permute(0, 2, 1, 3)
                     outputs = model(inputs)
                     _, predicted = torch.max(outputs, 1)
-                    #pdb.set_trace()
-
                     labels = labels.unsqueeze(0)
                     total += labels.size(1)
-
                     # total += labels.size(0)
                     correct += (predicted == labels).sum()
 
