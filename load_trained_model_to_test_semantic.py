@@ -23,12 +23,19 @@ model_path = "trained_model/2020-06-02_bs64_withoutpad_resnet_pretrained.pth"
 
 
 # Batch size for training (change depending on how much memory you have)
-batch_size = 32
+batch_size = 64
 
-activity_class_name = ""
+class_mapping = {"sitting_phone_talking": 10, "standing": 3, "walking_phone": 6, "walking_cart": 9,
+                 "walking_fast": 2, "wandering": 7, "walking_slow": 1, "standing_phone_talking": 4,
+                 "sitting": 0, "window_shopping": 5, "walking_phone_talking": 8}
+
+
+activity_class_name = "walking_cart"
+activity_class_number = 9
 
 def test_model(model, test_dataloader, is_inception=False):
     correct = 0
+    correct_semantics = 0
     total = 0
 
     # 9 is walking_cart
@@ -49,73 +56,107 @@ def test_model(model, test_dataloader, is_inception=False):
         total += labels.size(0)
         correct += (predicted == labels).sum()
 
-        sample_list = [i for i in range(len(labels)) if labels[i] == 9]
+        idx_sample_list = [i for i in range(len(labels)) if labels[i] == 9]
         inputs_cpu = inputs.cpu()
         labels_cpu = labels.cpu()
 
-        for i in range(len(sample_list)):
-            if predicted[sample_list[i]] != 9:
-                activity_class_name = "walking_cart"
-                activity_class_number = 9
+        predicted_semantics = predicted
+
+        for i in range(len(idx_sample_list)):
+            if predicted[idx_sample_list[i]] != activity_class_number:
                 axis_x = np.squeeze(np.array(inputs_cpu[i]))[0]
                 axis_y = np.squeeze(np.array(inputs_cpu[i]))[1]
 
                 missed_joints_boolean = axis_x == -1
                 missed_joints = [i for i, x in enumerate(missed_joints_boolean) if x]
-                n = [i for i in range(18)]
-                mask = axis_x != -1
 
-                fig, ax = plt.subplots()
-                ax.scatter(axis_x[mask], axis_y[mask])
+                # # Plot - Start
+                # n = [i for i in range(18)]
+                # mask = axis_x != -1
+                #
+                # fig, ax = plt.subplots()
+                # ax.scatter(axis_x[mask], axis_y[mask])
+                #
+                # for j, txt in enumerate(n):
+                #     ax.annotate(txt, (axis_x[j], axis_y[j]))
+                #
+                # plt.title("Label: " + activity_class_name + " (" + str(
+                #     activity_class_number) + "), Predicted: " + list(class_mapping.keys())[
+                #               list(class_mapping.values()).index(predicted[i].item())] + " (" + str(
+                #     predicted[i].item()) + ")\nMissed joints: " + " ".join(str(x) for x in missed_joints))
+                # plt.gca().invert_xaxis()
+                # plt.gca().invert_yaxis()
+                # # plt.savefig("img/study_case_9/" + str(k) + ".png")
+                # #plt.show()
+                # # Plot - End
 
-                for j, txt in enumerate(n):
-                    ax.annotate(txt, (axis_x[j], axis_y[j]))
+                if 3 not in missed_joints and not 4 in missed_joints and not 6 in missed_joints and not 7 in missed_joints \
+                    and 8 not in missed_joints and not 11 in missed_joints:
+                    # k == 11 (test image case)
+                    plt.show()
 
-                # plt.plot(axis_x, axis_y, 'ro')
-                plt.title(activity_class_name + " (" + str(
-                    activity_class_number) + "), " + "Missed joints: " + " ".join(str(x) for x in missed_joints))
-                plt.gca().invert_xaxis()
-                plt.gca().invert_yaxis()
-                plt.savefig("img/study_case_9/" + str(k) + ".png")
+                    x_8 = axis_x[8]
+                    y_8 = axis_y[8]
+                    x_11 = axis_x[11]
+                    y_11 = axis_y[11]
+                    x_min_8_11 = np.amin([x_8, x_11])
+                    y_min_8_11 = np.amin([y_8, y_11])
+                    x_max_8_11 = np.amax([x_8, x_11])
+                    y_max_8_11 = np.amax([y_8, y_11])
+
+                    x_3 = axis_x[3]
+                    y_3 = axis_y[3]
+                    x_4 = axis_x[4]
+                    y_4 = axis_y[4]
+                    x_6 = axis_x[6]
+                    y_6 = axis_y[6]
+                    x_7 = axis_x[7]
+                    y_7 = axis_y[7]
+                    ordered_x_3_4_6_7 = [x_3, x_4, x_6, x_7]
+                    ordered_y_3_4_6_7 = [y_3, y_4, y_6, y_7]
+                    ordered_x_3_4_6_7.sort()
+                    ordered_y_3_4_6_7.sort()
+                    x_min_3_4_6_7 = np.amin([x_3, x_4, x_6, x_7])
+                    y_min_3_4_6_7 = np.amin([y_3, y_4, y_6, y_7])
+                    x_max_3_4_6_7 = np.amax([x_3, x_4, x_6, x_7])
+                    y_max_3_4_6_7 = np.amax([y_3, y_4, y_6, y_7])
+
+                    x_second_smallest_3_4_6_7 = ordered_x_3_4_6_7[1]
+                    x_second_largest_3_4_6_7 = ordered_x_3_4_6_7[2]
+                    y_second_smallest_3_4_6_7 = ordered_y_3_4_6_7[1]
+                    y_second_largest_3_4_6_7 = ordered_y_3_4_6_7[2]
+
+                    if y_max_3_4_6_7 < y_min_8_11:
+                        if x_min_3_4_6_7 > x_min_8_11 or x_second_smallest_3_4_6_7 > x_min_8_11:
+                            if x_second_largest_3_4_6_7 - x_max_8_11 > 15 and x_max_3_4_6_7 - x_max_8_11 > 20:
+                                # We can predict is "walking_cart" - hand on left
+                                predicted_semantics[idx_sample_list[i]] = 9
+
+                        elif x_max_3_4_6_7 < x_min_8_11 or x_second_smallest_3_4_6_7 < x_min_8_11:
+                            if x_min_8_11 - x_second_smallest_3_4_6_7 > 15 and x_min_8_11 - x_min_3_4_6_7 > 20:
+                                # We can predict is "walking_cart" - hand on right
+                                predicted_semantics[idx_sample_list[i]] = 9
+                        o = 1
+
+
+                    o = 1
+
                 k += 1
-                m = 2
+
+        correct_semantics += (predicted_semantics == labels).sum()
 
         m = 1
-
-        # # Use semantics to compute predict label
-        # for i in range(len(labels)):
-        #     if labels[i].item() == 9:
-        #         inputs = inputs.cpu()
-        #         labels = labels.cpu()
-        #         activity_class_name = "walking_cart"
-        #         activity_class_number = 9
-        #         axis_x = np.squeeze(np.array(inputs[i]))[0]
-        #         axis_y = np.squeeze(np.array(inputs[i]))[1]
-        #
-        #         missed_joints_boolean = axis_x == -1
-        #         missed_joints = [i for i, x in enumerate(missed_joints_boolean) if x]
-        #         n = [i for i in range(18)]
-        #         mask = axis_x != -1
-        #
-        #         fig, ax = plt.subplots()
-        #         ax.scatter(axis_x[mask], axis_y[mask])
-        #
-        #         for i, txt in enumerate(n):
-        #             ax.annotate(txt, (axis_x[i], axis_y[i]))
-        #
-        #         # plt.plot(axis_x, axis_y, 'ro')
-        #         plt.title(activity_class_name + " (" + str(
-        #             activity_class_number) + "), " + "Missed joints: " + " ".join(str(x) for x in missed_joints))
-        #         plt.gca().invert_xaxis()
-        #         plt.gca().invert_yaxis()
-        #         plt.show()
-        #         k=2
 
 
 
 
     accuracy = 100 * correct / total
-    print('Accuracy: {}'.format(accuracy))
+    print('Accuracy: {:.2f}'.format(accuracy))
+
+    accuracy_semantics = 100 * correct_semantics / total
+    print('Accuracy Semantics: {:.2f}'.format(accuracy_semantics))
+
+    print("Correct {} sample with label 9 'walking_cart'".format(correct_semantics - correct))
 
     return accuracy
 
@@ -200,6 +241,25 @@ class ActivitySkeletalDataset(Dataset):
 
         return data, result
 
+# #START Use train dataset
+#
+# train_activity_dataset = ActivitySkeletalDataset(data_dir, 'train', data_transforms['train'])
+# #test_activity_dataset = ActivitySkeletalDataset(data_dir, 'test', data_transforms['test'])
+#
+# # Create training and test dataloaders
+# train_dataloader = torch.utils.data.DataLoader(train_activity_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
+#
+# # Detect if we have a GPU available
+# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+#
+# model_ft = model_ft.to(device)
+#
+# # Train and evaluate
+# test_model(model_ft, train_dataloader)
+#
+# # END Use train dataset
+
+
 # Create training and test datasets
 #train_activity_dataset = ActivitySkeletalDataset(data_dir, 'train', 'resnet', data_transforms['train'])
 test_activity_dataset = ActivitySkeletalDataset(data_dir, 'test', data_transforms['test'])
@@ -211,9 +271,10 @@ test_dataloader = torch.utils.data.DataLoader(test_activity_dataset, batch_size=
 # Detect if we have a GPU available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# Send the model to GPU
 model_ft = model_ft.to(device)
 
 # Train and evaluate
-#hist = train_model(model_ft, train_dataloader, test_dataloader, criterion, optimizer_ft, num_epochs=num_epochs, is_inception=(model_name=="inception"))
 test_model(model_ft, test_dataloader, is_inception=(model_name=="inception"))
+
+
+

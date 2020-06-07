@@ -9,11 +9,15 @@ class_mapping = {"sitting_phone_talking": 10, "standing": 3, "walking_phone": 6,
                  "sitting": 0, "window_shopping": 5, "walking_phone_talking": 8}
 
 # activity_class_name = "sitting"
-activity_class_name = "standing"
+activity_class_name = "sitting_phone_talking"
 activity_class_number = class_mapping[activity_class_name]
 
-data = pd.read_hdf("data/data_training_test_without_shuffle.h5", key="train_data")
-labels = pd.read_hdf("data/data_training_test_without_shuffle.h5", key="train_label")
+# data = pd.read_hdf("data/data_training_test_without_shuffle.h5", key="train_data")
+# labels = pd.read_hdf("data/data_training_test_without_shuffle.h5", key="train_label")
+
+data = pd.read_hdf("data_training_test_without_shuffle.h5", key="test_data")
+labels = pd.read_hdf("data_training_test_without_shuffle.h5", key="test_label")
+
 
 labels = labels.astype('int')
 #idx_list = labels.index[labels['Y'] == 6].tolist()
