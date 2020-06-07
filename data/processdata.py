@@ -38,13 +38,23 @@ for i in directory_list_carosello:
         landmarks_frame_X = landmarks_frame_X.append(current_file_data_X)
         label_Y = label_Y.append(current_file_data_Y)
 
-train_data, test_data, train_label, test_label = train_test_split(landmarks_frame_X, label_Y, test_size=0.2, shuffle=True, random_state=42)
+# Read and save data with Shuffle
 
-train_data.to_hdf("data_training_test.h5", "train_data")
-test_data.to_hdf("data_training_test.h5", "test_data")
-train_label.to_hdf("data_training_test.h5", "train_label")
-test_label.to_hdf("data_training_test.h5", "test_label")
+# train_data, test_data, train_label, test_label = train_test_split(landmarks_frame_X, label_Y, test_size=0.2, shuffle=True, random_state=42)
+#
+# train_data.to_hdf("data_training_test.h5", "train_data")
+# test_data.to_hdf("data_training_test.h5", "test_data")
+# train_label.to_hdf("data_training_test.h5", "train_label")
+# test_label.to_hdf("data_training_test.h5", "test_label")
 
+# Read and save data without Shuffle
+
+train_data, test_data, train_label, test_label = train_test_split(landmarks_frame_X, label_Y, test_size=0.2, shuffle=False, random_state=42)
+
+train_data.to_hdf("data_training_test_without_shuffle.h5", "train_data")
+test_data.to_hdf("data_training_test_without_shuffle.h5", "test_data")
+train_label.to_hdf("data_training_test_without_shuffle.h5", "train_label")
+test_label.to_hdf("data_training_test_without_shuffle.h5", "test_label")
 
 # train_label = np.array(train_label).astype('int')
 # test_label = np.array(test_label).astype('int')

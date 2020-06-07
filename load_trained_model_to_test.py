@@ -15,8 +15,12 @@ from datetime import datetime
 data_dir = "data/"
 
 # Models to choose from [resnet, alexnet, vgg, squeezenet, densenet, inception]
-model_name = "densenet"
-model_path = "trained_model/densenet_pretrained.pth"
+# model_name = "densenet"
+# model_path = "trained_model/densenet_pretrained.pth"
+
+model_name = "resnet"
+model_path = "trained_model/2020-06-02_bs64_withoutpad_resnet_pretrained.pth"
+
 
 # Batch size for training (change depending on how much memory you have)
 batch_size = 32
@@ -92,16 +96,16 @@ class ActivitySkeletalDataset(Dataset):
         data = self.data.iloc[idx, 0:]
 
         if model_name == 'resnet':
+            # 2D Version
             data = np.array([data])
             vector_x = []
             vector_y = []
-            vector_z = [0 for i in range(18)]
             for i in range(0, 36):
                 if i % 2 == 0:
                     vector_x.append(data[0][i])
                 else:
                     vector_y.append(data[0][i])
-            data = np.stack([np.array(vector_x), np.array(vector_y), np.array(vector_z)])
+            data = np.stack([np.array(vector_x), np.array(vector_y)])
             data = data.astype('double')
 
         if model_name == 'densenet':
@@ -128,7 +132,7 @@ test_activity_dataset = ActivitySkeletalDataset(data_dir, 'test', data_transform
 
 # Create training and test dataloaders
 #train_dataloader = torch.utils.data.DataLoader(train_activity_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
-test_dataloader = torch.utils.data.DataLoader(test_activity_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
+test_dataloader = torch.utils.data.DataLoader(test_activity_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
 
 # Detect if we have a GPU available
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
